@@ -1,6 +1,6 @@
 ## bomb
 
-phase_1（）
+#### phase_1（）
 
 ```assembly
 400e37:   48 89 c7                mov    %rax,%rdi    //第一个参数  
@@ -15,9 +15,7 @@ phase_1（）
 
 Border relations with Canada have never been better.
 
-
-
-phase_2（）
+#### phase_2（）
 
 利用callq 0x40145c <read_six_numbers>确定字符串格式，
 
@@ -25,17 +23,18 @@ phase_2（）
 
 字符串为“1 2 4 8 16 32”
 
-phase_3（）
+#### phase_3（）
 
 尝试分析时，发现jcc指令经常弄混，又回去复习了一遍
 
+```assembly
 cmp oprd1,oprd2 + JNBE/JA 无符号
-
 cmp oprd1,oprd2 + JNLE/JG 有符号
-
 oprd1>oprd2时跳转
-
 JZ/JE 相等则跳转
+```
+
+代码中`0x402470+8*第一参数`打印内存信息，可以看到相应的跳转地址，已经对应的eax值应该是多少，也就是第二数字的应该的取值。打印内存信息的命令行为jmp QWORD PTR [rax*8+0x402470]
 
     0 207  ===》x/x (int *)0x402470 打印得到地址400f7c
     1 311  ===》x/x (int *)0x402478 打印得到地址400fb9
